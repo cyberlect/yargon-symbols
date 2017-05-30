@@ -6,14 +6,14 @@ namespace Yargon.Symbols
     /// <summary>
     /// A symbol reference.
     /// </summary>
-    public class Reference
+    public class Reference<TName, TSymbol>
     {
         /// <summary>
         /// Gets the symbol being referenced.
         /// </summary>
         /// <value>The symbol being referenced; or <see langword="null"/> when the reference is unresolved.</value>
         [CanBeNull]
-        public Symbol Symbol { get; }
+        public Symbol<TName, TSymbol> Symbol { get; }
 
         /// <summary>
         /// Gets the URI of the document where the declaration occurs.
@@ -41,14 +41,14 @@ namespace Yargon.Symbols
 
         #region Constructors
         /// <summary>
-        /// Initializes a new instance of the <see cref="Reference"/> class.
+        /// Initializes a new instance of the <see cref="Reference{TName,TSymbol}"/> class.
         /// </summary>
         /// <param name="symbol">The symbol being referenced; or <see langword="null"/>.</param>
         /// <param name="document">The document with the reference.</param>
         /// <param name="name">The range of the name of the reference.</param>
         /// <param name="range">The range of the whole reference.</param>
         /// <param name="kind">The kind of reference.</param>
-        public Reference([CanBeNull] Symbol symbol, Uri document, Range name, Range range, ReferenceKind kind)
+        public Reference([CanBeNull] Symbol<TName, TSymbol> symbol, Uri document, Range name, Range range, ReferenceKind kind)
         {
             #region Contract
             if (document == null)
@@ -67,7 +67,7 @@ namespace Yargon.Symbols
 
         #region Equality
         /// <inheritdoc />
-        public bool Equals(Reference other)
+        public bool Equals(Reference<TName, TSymbol> other)
         {
             return !Object.ReferenceEquals(other, null)
                 && this.Symbol == other.Symbol
@@ -93,25 +93,25 @@ namespace Yargon.Symbols
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => Equals(obj as Reference);
+        public override bool Equals(object obj) => Equals(obj as Reference<TName, TSymbol>);
 
         /// <summary>
-        /// Returns a value that indicates whether two specified <see cref="Reference"/> objects are equal.
+        /// Returns a value that indicates whether two specified <see cref="Reference{TName,TSymbol}"/> objects are equal.
         /// </summary>
         /// <param name="left">The first object to compare.</param>
         /// <param name="right">The second object to compare.</param>
         /// <returns><see langword="true"/> if <paramref name="left"/> and <paramref name="right"/> are equal;
         /// otherwise, <see langword="false"/>.</returns>
-        public static bool operator ==(Reference left, Reference right) => Object.Equals(left, right);
+        public static bool operator ==(Reference<TName, TSymbol> left, Reference<TName, TSymbol> right) => Object.Equals(left, right);
 
         /// <summary>
-        /// Returns a value that indicates whether two specified <see cref="Reference"/> objects are not equal.
+        /// Returns a value that indicates whether two specified <see cref="Reference{TName,TSymbol}"/> objects are not equal.
         /// </summary>
         /// <param name="left">The first object to compare.</param>
         /// <param name="right">The second object to compare.</param>
         /// <returns><see langword="true"/> if <paramref name="left"/> and <paramref name="right"/> are not equal;
         /// otherwise, <see langword="false"/>.</returns>
-        public static bool operator !=(Reference left, Reference right) => !(left == right);
+        public static bool operator !=(Reference<TName, TSymbol> left, Reference<TName, TSymbol> right) => !(left == right);
         #endregion
 
         /// <inheritdoc />
